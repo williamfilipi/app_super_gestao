@@ -26,22 +26,15 @@ Route::get('/login', 'LoginController@login')->name('site.login');
 //Agrupa as rotas formando uma rota onde apenas pessoas em especificas terão acesso 
 Route::prefix('/app')->group(function(){
     Route::get('/clientes', 'ClientesController@clientes')->name('app.clientes');
-    Route::get('/fornecedores', 'FornecedoresController@fornecedores')->name('app.fornecedores');
+    Route::get('/fornecedores', 'FornecedorController@index')->name('app.fornecedor');
     Route::get('/produtos', 'ProdutosController@produtos')->name('app.produtos');    
 });
 
-Route::get('/rota1', function(){
-    echo 'Rota 1';
-})->name('site.rota1');
+Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('teste');
 
-//1° parametro -> rota de origem, 2° parametro -> rota de destino
-// Route::redirect('rota2', 'rota1');
-
-Route::get('/rota2', function(){
-    return redirect()->route('site.rota1');
-})->name('site.rota2');
-
-
+Route::fallback(function(){
+    echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para a página inicial';
+});
 
 //{mensagem?} -> ? parameter optional os parâmetros podem opcionais desde que sejam passados da direita para esquerda
 
